@@ -2,6 +2,7 @@ import 'package:cendikia/theme.dart';
 import 'package:flutter/material.dart';
 
 
+
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super (key: key);
 
@@ -18,6 +19,24 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor1,
+      body: ListView(
+        padding: EdgeInsets.symmetric(horizontal: 32),
+        children: [
+          Container(
+            margin: EdgeInsets.only(top: 70, bottom: 20),
+            child: Center(
+              child: Image.asset(
+                'assets/cendikia.png',
+                height: 200,
+              ),
+            ),
+          ),
+          Text(
+          'Sign In',
+            style: title1.copyWith(fontSize: 24),
+          ),
+        ],
+      ),
     );
   }
 }
