@@ -1,5 +1,7 @@
+import 'package:cendikia/pages/direkori_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:cendikia/pages/riwayat_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -13,7 +15,19 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       _selectedIndex = index;
     });
-    if (index == 2) {
+    if (index == 1) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => DirektoriPage()),
+      );
+    }
+    else if (index == 3) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Riwayat()),
+      );
+    }
+    else if (index == 4) {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => AccountScreen()),
@@ -72,14 +86,24 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onTap,
+        selectedItemColor: Colors.blue,
+        unselectedItemColor: Colors.grey,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
             icon: Icon(Icons.collections_bookmark),
-            label: 'Koleksi',
+            label: 'Rak Buku',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.chat),
             label: 'Komunitas',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.collections_bookmark_rounded),
+            label: 'Riwayat',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_circle),
@@ -125,7 +149,7 @@ class CategorySection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 9.0),
+      padding: const EdgeInsets.symmetric(vertical: 10.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
