@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:cendikia/pages/riwayat_page.dart';
 
+
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
