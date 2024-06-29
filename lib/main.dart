@@ -1,6 +1,8 @@
 import 'package:cendikia/pages/Home_Page.dart';
+import 'package:cendikia/pages/komunitas_page.dart';
 import 'package:cendikia/pages/login_page.dart';
 import 'package:cendikia/pages/onboarding_page.dart';
+import 'package:cendikia/pages/profile_page.dart';
 import 'package:cendikia/pages/splash_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -27,6 +29,8 @@ class MyApp extends StatelessWidget {
         '/onboarding': (context) => const onBoarding(),
         '/loginpage': (context) => const LoginPage(),
         '/homepage': (context) => HomePage(),
+        '/komunitas': (context) => ChatScreen(),
+        '/profilpage': (context) => AccountScreen(),
       },
     );
   }
