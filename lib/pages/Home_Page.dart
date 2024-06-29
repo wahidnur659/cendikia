@@ -1,15 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final searchProvider = Provider.of<SearchProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Book App'),
+        automaticallyImplyLeading: false,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text('Dashboard'),
+            IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () {
+                searchProvider.toggleSearchBar();
+              },
+            ),
+          ],
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
+            Visibility(
+              visible: searchProvider.showSearchBar,
+              child: SearchBarWidget(), // Only show when visible
+            ),
+            // Use CategorySection directly here
             CategorySection(title: 'Recomended', books: [
               {'title': 'Bintang', 'image': 'assets/cover-novel-bintang-karya-tere-liye.jpg'},
               {'title': 'Hamlet', 'image': 'assets/hamlet.jpg'},
@@ -48,6 +68,33 @@ class HomePage extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+// Assuming CategorySection class is defined elsewhere
+
+class SearchBarWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      child: TextField(
+        decoration: InputDecoration(
+          hintText: 'Cari',
+        ),
+      ),
+    );
+  }
+}
+
+class SearchProvider extends ChangeNotifier {
+  bool _showSearchBar = false;
+
+  bool get showSearchBar => _showSearchBar;
+
+  void toggleSearchBar() {
+    _showSearchBar = !_showSearchBar;
+    notifyListeners();
   }
 }
 
