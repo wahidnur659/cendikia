@@ -1,7 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int _selectedIndex = 0;
+
+  void _onTap(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+    if (index == 2) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => AccountScreen()),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final searchProvider = Provider.of<SearchProvider>(context);
@@ -12,7 +31,7 @@ class HomePage extends StatelessWidget {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text('Dashboard'),
+            Text('Cendikia'),
             IconButton(
               icon: Icon(Icons.search),
               onPressed: () {
@@ -27,10 +46,9 @@ class HomePage extends StatelessWidget {
           children: [
             Visibility(
               visible: searchProvider.showSearchBar,
-              child: SearchBarWidget(), // Only show when visible
+              child: SearchBarWidget(),
             ),
-            // Use CategorySection directly here
-            CategorySection(title: 'Recomended', books: [
+            CategorySection(title: 'Recommended', books: [
               {'title': 'Bintang', 'image': 'assets/cover-novel-bintang-karya-tere-liye.jpg'},
               {'title': 'Hamlet', 'image': 'assets/hamlet.jpg'},
               {'title': 'Negeri 5 Menara', 'image': 'assets/Novel_Negeri_5_Menara__Ahmad_Faudi__Buku_ORI__Soft_Cover.jpg'},
@@ -52,6 +70,8 @@ class HomePage extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        onTap: _onTap,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.collections_bookmark),
@@ -70,8 +90,6 @@ class HomePage extends StatelessWidget {
     );
   }
 }
-
-// Assuming CategorySection class is defined elsewhere
 
 class SearchBarWidget extends StatelessWidget {
   @override
@@ -107,7 +125,7 @@ class CategorySection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0),
+      padding: const EdgeInsets.symmetric(vertical: 9.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -125,7 +143,7 @@ class CategorySection extends StatelessWidget {
               itemCount: books.length,
               itemBuilder: (context, index) {
                 return Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: Column(
                     children: [
                       Container(
@@ -164,6 +182,20 @@ class CategorySection extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class AccountScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Akun'),
+      ),
+      body: Center(
+        child: Text('This is the Account Screen'),
       ),
     );
   }
