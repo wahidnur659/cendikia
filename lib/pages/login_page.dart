@@ -165,7 +165,7 @@ class _LoginPageState extends State<LoginPage> {
             Column(
               children: [
                 const Text('Logged in!'),
-                Text('Access Token: ${_accessToken?.tokenString}'),
+                Text('Access Token: ${_accessToken!.tokenString}'),
                 if (_userData != null) Text('User Data: ${_userData!['name']}'),
                 ElevatedButton(
                   onPressed: _logoutFromFacebook,
