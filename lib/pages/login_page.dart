@@ -1,10 +1,9 @@
+import 'package:cendikia/pages/Home_Page.dart';
 import 'package:cendikia/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:cendikia/widgets/widget.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -110,17 +109,25 @@ class _LoginPageState extends State<LoginPage> {
               ),
               textAlign: TextAlign.center,
             ),
+            TextButton(
+            onPressed: _showForgotPasswordDialog,
+            child: Text(
+              'Forgot Password?',
+              style: TextStyle(color: Colors.grey),
+              textAlign: TextAlign.right,
+            ),
+          ),
           SizedBox(
-            height: 25,
+            height: 5,
           ),
           ElevatedButton(
               onPressed: () {
-                if (_emailController.text == '_emailController' &&
-                    _passwordController.text == '_passwordController') {
-                  //  Navigator.push(
-                  //    context,
-                  //    MaterialPageRoute(builder: (context) => HomePage()),
-                  //  );
+                if (_emailController.text == '' &&
+                    _passwordController.text == '') {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => HomePage()),
+                    );
                 } else {
                   setState(() {
                     _isErrorVisible = true;
@@ -154,12 +161,13 @@ class _LoginPageState extends State<LoginPage> {
             height: 20,
           ),
           ElevatedButton.icon(
-            icon: const Icon(FontAwesomeIcons.facebook, color: Colors.white),
-            label: const Text('Facebook'), 
+            icon: const Icon(FontAwesomeIcons.facebook, color: Colors.blue),
+            label: Text('Facebook',selectionColor: textColor4),
             onPressed: _loginWithFacebook,
             style: ElevatedButton.styleFrom(
-              backgroundColor: Color.fromARGB(255, 72, 102, 247),
+              backgroundColor: Color.fromARGB(255, 255, 255, 255),
               minimumSize: const Size(256, 50),
+              textStyle: whiteTextStyle,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(14),
               ),
@@ -179,97 +187,126 @@ class _LoginPageState extends State<LoginPage> {
               ],
             ),
           SizedBox(
-            height: 20,
+            height: 10,
           ),
-          TextField(
-            controller: _phoneController,
-            decoration: InputDecoration(
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(14),
-                borderSide: BorderSide(color: Colors.white),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(14),
-                borderSide: BorderSide(color: Colors.white),
-              ),
-              filled: true,
-              fillColor: Colors.white,
-              hintText: 'Phone Number',
-              hintStyle: TextStyle(
-                color: textColor1,
-                fontStyle: FontStyle.italic,
-                fontSize: 15,
-              ),
-            ),
-            keyboardType: TextInputType.phone,
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          ElevatedButton(
-            onPressed: _sendOTP,
+          ElevatedButton.icon(
+            icon: const Icon(FontAwesomeIcons.phone, color: Colors.white),
+            label: Text('No Handphone',style: TextStyle(color: Colors.white),),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text('Login with Phone'),
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        TextField(
+                          controller: _phoneController,
+                          decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(14),
+                              borderSide: BorderSide(color: Colors.white),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(14),
+                              borderSide: BorderSide(color: Colors.white),
+                            ),
+                            filled: true,
+                            fillColor: Colors.white,
+                            hintText: 'Phone Number',
+                            hintStyle: TextStyle(
+                              color: Colors.grey,
+                              fontStyle: FontStyle.italic,
+                              fontSize: 15,
+                            ),
+                          ),
+                          keyboardType: TextInputType.phone,
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        ElevatedButton(
+                          onPressed: _sendOTP,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blue,
+                            minimumSize: Size(256, 50),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(14),
+                            ),
+                          ),
+                          child: Text(
+                            'Send OTP',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        TextField(
+                          controller: _otpController,
+                          decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(14),
+                              borderSide: BorderSide(color: Colors.white),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(14),
+                              borderSide: BorderSide(color: Colors.white),
+                            ),
+                            filled: true,
+                            fillColor: Colors.white,
+                            hintText: 'OTP',
+                            hintStyle: TextStyle(
+                              color: Colors.grey,
+                              fontStyle: FontStyle.italic,
+                              fontSize: 15,
+                            ),
+                          ),
+                          keyboardType: TextInputType.number,
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        ElevatedButton(
+                          onPressed: _verifyOTP,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blue,
+                            minimumSize: Size(256, 50),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(14),
+                            ),
+                          ),
+                          child: Text(
+                            'Verify OTP',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              );
+            },
             style: ElevatedButton.styleFrom(
-              backgroundColor: backgroundColor2,
-              minimumSize: Size(256, 50),
+              backgroundColor: Color.fromARGB(255, 69, 66, 66),
+              minimumSize: const Size(256, 50),
+              textStyle: TextStyle(color: Colors.white),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(14),
               ),
-            ),
-            child: Text(
-              'Send OTP',
-              style: TextStyle(
-                color: backgroundColor1,
-                fontSize: 20,
-                fontWeight: semiBold,
-              ),
+              alignment: Alignment.center,
             ),
           ),
-          SizedBox(
-            height: 20,
-          ),
-          TextField(
-            controller: _otpController,
-            decoration: InputDecoration(
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(14),
-                borderSide: BorderSide(color: Colors.white),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(14),
-                borderSide: BorderSide(color: Colors.white),
-              ),
-              filled: true,
-              fillColor: Colors.white,
-              hintText: 'OTP',
-              hintStyle: TextStyle(
-                color: textColor1,
-                fontStyle: FontStyle.italic,
-                fontSize: 15,
-              ),
-            ),
-            keyboardType: TextInputType.number,
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          ElevatedButton(
-            onPressed: _verifyOTP,
-            style: ElevatedButton.styleFrom(
-              backgroundColor: backgroundColor2,
-              minimumSize: Size(256, 50),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(14),
-              ),
-            ),
-            child: Text(
-              'Verify OTP',
-              style: TextStyle(
-                color: backgroundColor1,
-                fontSize: 20,
-                fontWeight: semiBold,
-              ),
-            ),
-          ),
+          
         ],
       ),
     );
@@ -319,6 +356,7 @@ class _LoginPageState extends State<LoginPage> {
       },
     );
   }
+          
 
   Future<void> _verifyOTP() async {
     PhoneAuthCredential credential = PhoneAuthProvider.credential(
@@ -327,6 +365,47 @@ class _LoginPageState extends State<LoginPage> {
     );
     await FirebaseAuth.instance.signInWithCredential(credential);
     print("Login successful");
+  }
+  void _showForgotPasswordDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        final TextEditingController emailController = TextEditingController();
+        return AlertDialog(
+          title: Text('Forgot Password'),
+          content: TextField(
+            controller: emailController,
+            decoration: InputDecoration(
+              labelText: 'Enter your email',
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Cancel'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                _resetPassword(emailController.text);
+                Navigator.of(context).pop();
+              },
+              child: Text('Reset Password'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _resetPassword(String email) async {
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      print('Password reset email sent');
+    } catch (e) {
+      print('Failed to send password reset email: $e');
+    }
   }
 }
 
