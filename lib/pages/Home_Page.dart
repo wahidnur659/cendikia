@@ -1,4 +1,6 @@
-import 'package:cendikia/pages/direkori_page.dart';
+import 'package:cendikia/pages/rak_buku_page.dart';
+import 'package:cendikia/pages/komunitas_page.dart';
+import 'package:cendikia/pages/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:cendikia/pages/riwayat_page.dart';
@@ -15,23 +17,31 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       _selectedIndex = index;
     });
-    if (index == 1) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => DirektoriPage()),
-      );
-    }
-    else if (index == 3) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => Riwayat()),
-      );
-    }
-    else if (index == 4) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => AccountScreen()),
-      );
+    switch (index) {
+      case 1:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => RakBukuPage()),
+        );
+        break;
+      case 2:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ChatScreen()),
+        );
+        break;
+      case 3:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => Riwayat()),
+        );
+        break;
+      case 4:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => AccountScreen()), 
+        );
+        break;
     }
   }
 
@@ -211,16 +221,16 @@ class CategorySection extends StatelessWidget {
   }
 }
 
-class AccountScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Akun'),
-      ),
-      body: Center(
-        child: Text('This is the Account Screen'),
-      ),
-    );
-  }
-}
+// class AccountScreen extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Akun'),
+//       ),
+//       body: Center(
+//         child: Text('This is the Account Screen'),
+//       ),
+//     );
+//   }
+// }
