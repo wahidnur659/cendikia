@@ -4,8 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:cendikia/widget/widget.dart';
+import 'package:cendikia/widgets/widget.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 
 
@@ -19,9 +21,12 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _otpController = TextEditingController();
   bool _isErrorVisible = false;
   AccessToken? _accessToken;
   Map<String, dynamic>? _userData;
+  String _verificationId = '';
 
   @override
   Widget build(BuildContext context) {
@@ -110,8 +115,8 @@ class _LoginPageState extends State<LoginPage> {
           ),
           ElevatedButton(
               onPressed: () {
-                if (_emailController.text == '' &&
-                    _passwordController.text == '') {
+                if (_emailController.text == '_emailController' &&
+                    _passwordController.text == '_passwordController') {
                   //  Navigator.push(
                   //    context,
                   //    MaterialPageRoute(builder: (context) => HomePage()),
@@ -171,12 +176,100 @@ class _LoginPageState extends State<LoginPage> {
                   onPressed: _logoutFromFacebook,
                   child: const Text('Logout'),
                 ),
-                ElevatedButton(
-                  onPressed: _logoutFromFacebook,
-                  child: const Text('Logout'),
-                ),
               ],
             ),
+          SizedBox(
+            height: 20,
+          ),
+          TextField(
+            controller: _phoneController,
+            decoration: InputDecoration(
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(14),
+                borderSide: BorderSide(color: Colors.white),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(14),
+                borderSide: BorderSide(color: Colors.white),
+              ),
+              filled: true,
+              fillColor: Colors.white,
+              hintText: 'Phone Number',
+              hintStyle: TextStyle(
+                color: textColor1,
+                fontStyle: FontStyle.italic,
+                fontSize: 15,
+              ),
+            ),
+            keyboardType: TextInputType.phone,
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          ElevatedButton(
+            onPressed: _sendOTP,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: backgroundColor2,
+              minimumSize: Size(256, 50),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(14),
+              ),
+            ),
+            child: Text(
+              'Send OTP',
+              style: TextStyle(
+                color: backgroundColor1,
+                fontSize: 20,
+                fontWeight: semiBold,
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          TextField(
+            controller: _otpController,
+            decoration: InputDecoration(
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(14),
+                borderSide: BorderSide(color: Colors.white),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(14),
+                borderSide: BorderSide(color: Colors.white),
+              ),
+              filled: true,
+              fillColor: Colors.white,
+              hintText: 'OTP',
+              hintStyle: TextStyle(
+                color: textColor1,
+                fontStyle: FontStyle.italic,
+                fontSize: 15,
+              ),
+            ),
+            keyboardType: TextInputType.number,
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          ElevatedButton(
+            onPressed: _verifyOTP,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: backgroundColor2,
+              minimumSize: Size(256, 50),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(14),
+              ),
+            ),
+            child: Text(
+              'Verify OTP',
+              style: TextStyle(
+                color: backgroundColor1,
+                fontSize: 20,
+                fontWeight: semiBold,
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -203,4 +296,37 @@ class _LoginPageState extends State<LoginPage> {
       _userData = null;
     });
   }
+  Future<void> _sendOTP() async {
+    await FirebaseAuth.instance.verifyPhoneNumber(
+      phoneNumber: _phoneController.text,
+      verificationCompleted: (PhoneAuthCredential credential) async {
+        await FirebaseAuth.instance.signInWithCredential(credential);
+        print("Login successful");
+      },
+      verificationFailed: (FirebaseAuthException e) {
+        print('Verification failed: ${e.message}');
+      },
+      codeSent: (String verificationId, int? resendToken) {
+        setState(() {
+          _verificationId = verificationId;
+        });
+        print('OTP sent to ${_phoneController.text}');
+      },
+      codeAutoRetrievalTimeout: (String verificationId) {
+        setState(() {
+          _verificationId = verificationId;
+        });
+      },
+    );
+  }
+
+  Future<void> _verifyOTP() async {
+    PhoneAuthCredential credential = PhoneAuthProvider.credential(
+      verificationId: _verificationId,
+      smsCode: _otpController.text,
+    );
+    await FirebaseAuth.instance.signInWithCredential(credential);
+    print("Login successful");
+  }
 }
+

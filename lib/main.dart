@@ -1,4 +1,6 @@
 import 'package:cendikia/pages/login_page.dart';
+import 'package:cendikia/pages/onboarding_page.dart';
+import 'package:cendikia/pages/splash_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -14,7 +16,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: {
-        '/': (context) => const LoginPage(),
+        '/': (context) => const SplashPage(),
+        '/loginpage': (context) => const LoginPage(),
+        '/onboarding': (context) => const onBoarding(),
       },
     );
   }
