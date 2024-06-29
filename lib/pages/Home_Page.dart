@@ -144,7 +144,7 @@ class _HomePageState extends State<HomePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Menuu',
+                  'Menu',
                   style: blackTextStyle.copyWith(
                     color: backgroundColor2,
                     fontSize: 16,
