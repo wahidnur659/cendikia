@@ -1,4 +1,6 @@
-import 'package:cendikia'
+import 'package:cendikia/theme.dart';
+import 'package:flutter/material.dart';
+
 class HomeBookItem extends StatelessWidget {
   final String imageUrl;
   final String title;

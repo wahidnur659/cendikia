@@ -1,4 +1,5 @@
 import 'package:cendikia/theme.dart';
+import 'package:cendikia/pages/Home_Page.dart';
 import 'package:flutter/material.dart';
 
 
@@ -96,8 +97,8 @@ class _LoginPageState extends State<LoginPage> {
           ),
           ElevatedButton(
             onPressed: () {
-                if (_emailController.text == ' ' &&
-                    _passwordController.text == ' ') {
+                if (_emailController.text == '' &&
+                    _passwordController.text == '') {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => HomePage()),

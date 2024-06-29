@@ -1,4 +1,4 @@
-import 'packgae:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:cendikia/theme.dart';
 
 class HomeMenuItem extends StatelessWidget {

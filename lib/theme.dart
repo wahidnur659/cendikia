@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 Color backgroundColor1 = Color.fromARGB(255, 221, 215, 225);
 Color backgroundColor2 = Color.fromARGB(255, 55, 0, 255);
-Color backgroundColor3 = Color(0xffFFFFFF)
+Color backgroundColor3 = Color(0xffFFFFFF);
 
 
 Color textColor1 =Color.fromARGB(255, 212, 219, 15);
@@ -25,4 +25,10 @@ TextStyle title2 = GoogleFonts.poppins(
   color: textColor2,
   fontWeight: Semibold,
   fontSize: 50,
+);
+TextStyle blackTextStyle = GoogleFonts.poppins(
+  color: textColor3,
+);
+TextStyle whiteTextStyle= GoogleFonts.poppins(
+  color: textColor4
 );

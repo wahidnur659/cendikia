@@ -1,6 +1,9 @@
-import 'package:cendikia/pages/Home_Page.dart';
+import 'package:cendikia/pages/profilePage.dart';
 import 'package:cendikia/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:cendikia/widgets/Home_book_items.dart';
+import 'package:cendikia/widgets/Home_menu_items.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -84,7 +87,7 @@ class _HomePageState extends State<HomePage> {
                                 'Fachri',
                                 style: whiteTextStyle.copyWith(
                                   fontSize: 16,
-                                  fontWeight: semiBold,
+                                  fontWeight: Semibold,
                                 ),
                               ),
                             ],
