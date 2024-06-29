@@ -26,7 +26,7 @@ class _LoginPageState extends State<LoginPage> {
   bool _isErrorVisible = false;
   AccessToken? _accessToken;
   Map<String, dynamic>? _userData;
-  String _verificationId = '';
+  String _verificationId = 'S';
 
   @override
   Widget build(BuildContext context) {
