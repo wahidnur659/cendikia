@@ -31,7 +31,7 @@ class onBoarding extends StatelessWidget {
               vertical: 69,
             ),
             decoration: BoxDecoration(
-              color: backgroundColor3,
+              color: backgroundColor1,
               borderRadius: BorderRadius.circular(15),
             ),
             child: Column(
@@ -39,7 +39,7 @@ class onBoarding extends StatelessWidget {
                 Text(
                   'Baca buku membangun negeri\fyang sangat indah',
                   style: blackTextStyle.copyWith(
-                      fontSize: 15, fontWeight: Semibold),
+                      fontSize: 15, fontWeight: semiBold),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(
@@ -66,7 +66,7 @@ class onBoarding extends StatelessWidget {
                     'Get Started',
                     style: whiteTextStyle.copyWith(
                       fontSize: 15,
-                      fontWeight: Semibold,
+                      fontWeight: semiBold,
                     ),
                   ),
                   style: ElevatedButton.styleFrom(

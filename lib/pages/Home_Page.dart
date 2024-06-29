@@ -87,7 +87,7 @@ class _HomePageState extends State<HomePage> {
                                 'Fachri',
                                 style: whiteTextStyle.copyWith(
                                   fontSize: 16,
-                                  fontWeight: Semibold,
+                                  fontWeight: semiBold,
                                 ),
                               ),
                             ],
