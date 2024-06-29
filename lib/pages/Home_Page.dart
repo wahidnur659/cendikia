@@ -125,7 +125,7 @@ class CategorySection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0),
+      padding: const EdgeInsets.symmetric(vertical: 9.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
