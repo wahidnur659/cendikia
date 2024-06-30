@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "385075979869",
+    "project_id": "amcc-cendikia",
+    "storage_bucket": "amcc-cendikia.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:385075979869:android:aa08338e3ee8bf3ea50fb4",
+        "android_client_info": {
+          "package_name": "com.example.cendikia"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCq5csswcIZEYnl3N6AgN0xChOIRAohTLw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
