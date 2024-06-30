@@ -6,7 +6,7 @@ import 'package:cendikia/pages/profile_page.dart';
 import 'package:cendikia/pages/splash_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-//import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 void main() {
   runApp(
