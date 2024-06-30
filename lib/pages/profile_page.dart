@@ -1,4 +1,6 @@
+import 'package:url_launcher/url_launcher.dart';
 import 'package:cendikia/pages/login_page.dart';
+import 'package:cendikia/pages/rate_page.dart';
 import 'package:flutter/material.dart';
 import 'package:cendikia/pages/membership_page.dart';
 import 'package:translator_plus/translator_plus.dart';
@@ -21,7 +23,6 @@ class _AccountScreenState extends State<AccountScreen> {
         );
         break;
       case 'Bahasa':
-        // Implementasi pilihan bahasa (menggunakan showDialog)
         showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -59,6 +60,31 @@ class _AccountScreenState extends State<AccountScreen> {
       case 'Tentang Aplikasi':
         _showAboutAPKDialog(context);
         break;
+      case 'Beri Ulasan':
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => RatingPage()),
+        );
+        break;
+      case 'Hubungi Kami':
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Scaffold(
+              appBar: AppBar(
+                title: Text('Hubungi Kami'),
+              ),
+              body: ListView(
+                children: [
+                  ContactListTile(name: 'Wahid Nurrohim', email: 'wahidnurrohim@students.amikom.ac.id'),
+                  ContactListTile(name: 'Muhammad Fachri Agus M', email: 'fachriagus.m@students.amikom.ac.id'),
+                  ContactListTile(name: 'Wahyu Adi Nugroho', email: 'wahyuadi@students.amikom.ac.id'),
+                ],
+              ),
+            ),
+          ),
+        );
+        break;
       default:
         print('$title ditekan');
     }
@@ -69,19 +95,16 @@ class _AccountScreenState extends State<AccountScreen> {
       final Translation translation = await _translator.translate(text, to: toLanguageCode);
       print('Original: $text\nTranslated: ${translation.text}');
 
-      // Contoh penggunaan hasil terjemahan:
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('${translation.text}'),
         ),
       );
 
-      // Simpan preferensi bahasa yang dipilih
       setState(() {
         _selectedLanguage = toLanguageCode;
       });
 
-      // Tampilkan notifikasi pergantian bahasa
       _showLanguageChangedNotification(context);
     } catch (error) {
       print('Error terjemahkan teks: $error');
@@ -89,14 +112,10 @@ class _AccountScreenState extends State<AccountScreen> {
   }
 
   void _changeLanguage(String languageCode) {
-    // Lakukan terjemahan dan perubahan bahasa di sini
     _translateText(context, 'Hello, how are you?', languageCode);
-    // Anda bisa menambahkan fungsi untuk merubah semua tampilan bahasa di aplikasi
-    // Contoh: updateLanguageInApp(languageCode);
   }
 
   void _showLanguageChangedNotification(BuildContext context) {
-    // Tampilkan notifikasi pergantian bahasa (misalnya, dengan SnackBar)
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text('Bahasa diubah ke ${_selectedLanguage == 'id' ? 'Bahasa Indonesia' : 'Bahasa Inggris'}'),
@@ -105,7 +124,6 @@ class _AccountScreenState extends State<AccountScreen> {
   }
 
   void _showAboutAPKDialog(BuildContext context) {
-    // Show dialog with APK details
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -160,12 +178,11 @@ class _AccountScreenState extends State<AccountScreen> {
     );
   }
 
-    void _handleSignOut(BuildContext context) {
-    // Navigate back to LoginPage
+  void _handleSignOut(BuildContext context) {
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(builder: (context) => LoginPage()),
-      (route) => false, // Prevent going back to the previous page
+      (route) => false,
     );
   }
 
@@ -203,27 +220,25 @@ class _AccountScreenState extends State<AccountScreen> {
           Expanded(
             child: ListView(
               children: [
-                GestureDetector(
+                ListTile(
+                  leading: Icon(Icons.card_membership),
+                  title: Text('Membership'),
                   onTap: () => _onItemTapped(context, 'Membership'),
-                  child: ListTile(
-                    leading: Icon(Icons.card_membership),
-                    title: Text('Membership'),
-                  ),
                 ),
-                GestureDetector(
+                ListTile(
+                  leading: Icon(Icons.language),
+                  title: Text('Bahasa'),
                   onTap: () => _onItemTapped(context, 'Bahasa'),
-                  child: ListTile(
-                    leading: Icon(Icons.language),
-                    title: Text('Bahasa'),
-                  ),
                 ),
                 ListTile(
                   leading: Icon(Icons.contact_phone),
                   title: Text('Hubungi Kami'),
+                  onTap: () => _onItemTapped(context, 'Hubungi Kami'),
                 ),
                 ListTile(
                   leading: Icon(Icons.rate_review),
                   title: Text('Beri Ulasan'),
+                  onTap: () => _onItemTapped(context, 'Beri Ulasan'),
                 ),
                 ListTile(
                   leading: Icon(Icons.adb_outlined),
@@ -239,6 +254,71 @@ class _AccountScreenState extends State<AccountScreen> {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class ContactListTile extends StatefulWidget {
+  final String name;
+  final String email;
+
+  ContactListTile({required this.name, required this.email});
+
+  @override
+  _ContactListTileState createState() => _ContactListTileState();
+}
+
+class _ContactListTileState extends State<ContactListTile> {
+  bool _isTapped = false;
+
+  void _handleTap() async {
+    final Uri emailLaunchUri = Uri(
+      scheme: 'mailto',
+      path: widget.email,
+    );
+    if (await canLaunchUrl(emailLaunchUri)) {
+      await launchUrl(emailLaunchUri);
+    } else {
+      print('Could not launch $emailLaunchUri');
+    }
+
+    setState(() {
+      _isTapped = !_isTapped;
+    });
+
+    Future.delayed(Duration(seconds: 1), () {
+      setState(() {
+        _isTapped = false;
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: Text(widget.name),
+      subtitle: InkWell(
+        child: Row(
+          children: [
+            Icon(
+              Icons.email,
+              color: _isTapped ? Colors.blue : Colors.black,
+            ),
+            SizedBox(width: 5),
+            Flexible(
+              child: Text(
+                widget.email,
+                style: TextStyle(
+                  color: _isTapped ? Colors.blue : Colors.black,
+                  decoration: TextDecoration.underline,
+                ),
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ],
+        ),
+        onTap: _handleTap,
       ),
     );
   }
